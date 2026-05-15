@@ -1,0 +1,47 @@
+[2026-05-15 11:00:03] ===========================================
+[2026-05-15 11:00:03] INICIANDO PROCESO AUTOMÁTICO DE DIGESTS
+[2026-05-15 11:00:03] ===========================================
+
+>>> Ejecutando forzar_build.py...
+=== PASO 1: feedback-stats ===
+HTTP 200: {
+  "ok": true,
+  "por_estado": {
+    "aprobado_para_resumen": 0,
+    "borrador": 0,
+    "cancelado": 0,
+    "guardado": 0,
+    "incluido_en_digest": 39,
+    "requiere_revision": 0
+  },
+  "total": 39
+}
+
+=== PASO 2: aprobar-guardados ===
+HTTP 200: {
+  "aprobados": 0,
+  "errores": 0,
+  "message": "0 feedbacks pasados a aprobado_para_resumen",
+  "ok": true
+}
+
+=== PASO 3: build-now (720h) ===
+HTTP 200: {
+  "digests_creados": 0,
+  "email_sent": false,
+  "feedbacks_bloqueados_sin_email": 0,
+  "feedbacks_incluidos": 0,
+  "horas_analizadas": 720,
+  "ok": true,
+  "periodo_fin": "2026-05-15T14:00:09.319327",
+  "periodo_inicio": "2026-04-15T14:00:09.319327"
+}
+
+=== PASO 4: Digests listos para enviar: 0 ===
+
+>>> Ejecutando enviar_digests.py...
+Conectando a https://web-production-150b6.up.railway.app ...
+Digests pendientes: 0
+Nada que enviar.
+
+[11:00:14] Flujo completado con éxito.
