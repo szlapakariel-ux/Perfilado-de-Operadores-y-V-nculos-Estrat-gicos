@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plataforma de Perfilado de Operadores y Vínculos Estratégicos">
+    <title>Perfilado Estratégico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="glass-panel active">
+        <div class="glass-content">
+            <h1>Acceso Restringido</h1>
+            <p>Ingrese el código de acceso para continuar.</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="password" id="access-code" required placeholder="Código de Acceso">
+                </div>
+                <button type="submit" class="btn-primary">Verificar Acceso</button>
+                <div id="login-error" class="error-msg"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <main id="dashboard" class="hidden">
+        <header>
+            <div class="logo">Perfilado<span>Pro</span></div>
+            <div class="user-badge">Operador Activo</div>
+        </header>
+
+        <section class="form-container glass-panel">
+            <h2>Registrar Nuevo Perfil</h2>
+            <p>Complete los datos del operador o vínculo estratégico.</p>
+
+            <form id="profile-form">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="nombre">Nombre y Apellido</label>
+                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
+                    </div>
+                    <div class="input-group">
+                        <label for="cargo">Cargo / Rol</label>
+                        <input type="text" id="cargo" name="cargo" required placeholder="Ej: Director">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="institucion">Institución / Empresa</label>
+                    <input type="text" id="institucion" name="institucion" placeholder="Nombre de la entidad">
+                </div>
+
+                <div class="input-group">
+                    <label for="influencia">Nivel de Influencia</label>
+                    <select id="influencia" name="influencia">
+                        <option value="alto">Alto</option>
+                        <option value="medio" selected>Medio</option>
+                        <option value="bajo">Bajo</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="notas">Observaciones y Vínculos</label>
+                    <textarea id="notas" name="notas" rows="4" placeholder="Detalles estratégicos relevantes..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary btn-large">
+                    <span class="btn-text">Guardar Perfil</span>
+                    <div class="loader hidden"></div>
+                </button>
+                <div id="form-feedback" class="feedback-msg"></div>
+            </form>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

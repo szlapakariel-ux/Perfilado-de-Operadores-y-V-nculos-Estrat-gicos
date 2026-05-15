@@ -33,7 +33,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path == "/scraping/ejecutar":
             ahora = datetime.now().strftime("%H:%M:%S")
-            print(f"✅ [{ahora}] Recibí pedido de scraping desde Render")
+            print(f"[OK] [{ahora}] Recibí pedido de scraping desde Render")
             payload = {
                 "ok": True,
                 "mensajes": [
@@ -68,12 +68,12 @@ class Handler(BaseHTTPRequestHandler):
 # ------------------------------------------------------------------ #
 if __name__ == "__main__":
     server = HTTPServer(("0.0.0.0", PORT), Handler)
-    print(f"🚀 Servidor escuchando en http://0.0.0.0:{PORT}")
+    print(f"[START] Servidor escuchando en http://0.0.0.0:{PORT}")
     print("   Rutas disponibles:")
-    print("     GET  /ping              → health-check")
-    print("     POST /scraping/ejecutar → simula pedido de Render")
-    print("\n   Esperando conexiones… (Ctrl+C para detener)\n")
+    print("     GET  /ping              -> health-check")
+    print("     POST /scraping/ejecutar -> simula pedido de Render")
+    print("\n   Esperando conexiones... (Ctrl+C para detener)\n")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\n⛔ Servidor detenido.")
+        print("\n[STOP] Servidor detenido.")
