@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Plataforma de Perfilado de Operadores y Vínculos Estratégicos">
-    <title>Perfilado Estratégico</title>
+    <title>Perfilado Estratégico · Mesa Ferroviaria</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -32,53 +32,114 @@
     <!-- Main Dashboard -->
     <main id="dashboard" class="hidden">
         <header>
-            <div class="logo">Perfilado<span>Pro</span></div>
-            <div class="user-badge">Operador Activo</div>
+            <div class="logo">Mesa<span>Ferroviaria</span></div>
+            <div class="header-actions">
+                <button id="toggle-mode" class="btn-mode">Modo RRHH</button>
+                <button id="open-new" class="btn-primary btn-compact">+ Nuevo Agente</button>
+            </div>
         </header>
 
-        <section class="form-container glass-panel">
-            <h2>Registrar Nuevo Perfil</h2>
-            <p>Complete los datos del operador o vínculo estratégico.</p>
+        <section class="toolbar">
+            <input type="text" id="search" placeholder="Buscar por nombre, línea o sector...">
+            <div id="counter" class="counter-badge">0 agentes</div>
+        </section>
+
+        <section id="operators-grid" class="operators-grid"></section>
+        <div id="empty-state" class="empty-state hidden">
+            <p>No hay agentes registrados todavía.</p>
+            <p class="muted">Hacé clic en <strong>+ Nuevo Agente</strong> para comenzar.</p>
+        </div>
+    </main>
+
+    <!-- Modal Form -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal-panel glass-panel">
+            <div class="modal-header">
+                <h2 id="modal-title">Nuevo Agente</h2>
+                <button id="modal-close" class="modal-close">×</button>
+            </div>
 
             <form id="profile-form">
+                <input type="hidden" id="edit-id" value="">
+
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="nombre">Nombre y Apellido</label>
-                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
+                        <label for="nombre">Apellido y Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Pérez, Juan">
                     </div>
                     <div class="input-group">
-                        <label for="cargo">Cargo / Rol</label>
-                        <input type="text" id="cargo" name="cargo" required placeholder="Ej: Director">
+                        <label for="celular">Celular</label>
+                        <input type="text" id="celular" name="celular" placeholder="Ej: 11 1234-5678">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="linea">Línea</label>
+                        <select id="linea" name="linea"></select>
+                    </div>
+                    <div class="input-group">
+                        <label for="sector">Sector</label>
+                        <select id="sector" name="sector"></select>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="correo@dominio.com">
+                    </div>
+                    <div class="input-group">
+                        <label for="fotoUrl">URL Foto</label>
+                        <input type="url" id="fotoUrl" name="fotoUrl" placeholder="https://...">
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label for="institucion">Institución / Empresa</label>
-                    <input type="text" id="institucion" name="institucion" placeholder="Nombre de la entidad">
+                    <label for="vinculo">Vínculo</label>
+                    <input type="text" id="vinculo" name="vinculo" placeholder="Detalle del vínculo institucional o personal">
                 </div>
 
                 <div class="input-group">
-                    <label for="influencia">Nivel de Influencia</label>
-                    <select id="influencia" name="influencia">
-                        <option value="alto">Alto</option>
-                        <option value="medio" selected>Medio</option>
-                        <option value="bajo">Bajo</option>
-                    </select>
+                    <label>Perfil RRHH (multiselección)</label>
+                    <div id="traits-container" class="traits-container"></div>
                 </div>
 
-                <div class="input-group">
-                    <label for="notas">Observaciones y Vínculos</label>
-                    <textarea id="notas" name="notas" rows="4" placeholder="Detalles estratégicos relevantes..."></textarea>
+                <div class="lado-b-panel">
+                    <div class="lado-b-title">Inteligencia Estratégica · Lado B</div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="afinidad">Habla mejor con</label>
+                            <select id="afinidad" name="afinidad"></select>
+                        </div>
+                        <div class="input-group">
+                            <label>Semáforo de trato</label>
+                            <div class="semaforo">
+                                <button type="button" class="sem-dot sem-green" data-value="green" title="Cordial"></button>
+                                <button type="button" class="sem-dot sem-yellow" data-value="yellow" title="Cuidado"></button>
+                                <button type="button" class="sem-dot sem-red" data-value="red" title="Hostil"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="perfilInterno">Tips de abordaje</label>
+                        <textarea id="perfilInterno" name="perfilInterno" rows="3" placeholder="Estrategia, tonos a evitar, palancas..."></textarea>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn-primary btn-large">
-                    <span class="btn-text">Guardar Perfil</span>
-                    <div class="loader hidden"></div>
-                </button>
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancel" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Guardar</span>
+                        <div class="loader hidden"></div>
+                    </button>
+                </div>
                 <div id="form-feedback" class="feedback-msg"></div>
             </form>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
