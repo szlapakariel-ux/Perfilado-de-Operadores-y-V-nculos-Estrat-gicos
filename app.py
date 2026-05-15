@@ -44,6 +44,28 @@ def add_profile():
     save_profile(data)
     return jsonify({"success": True, "message": "Perfil registrado con éxito"})
 
+# ------------------------------------------------------------------ #
+#  Rutas originales del túnel (prueba_tunel.py)
+# ------------------------------------------------------------------ #
+@app.route("/ping", methods=["GET"])
+def ping():
+    return jsonify({"ok": True, "tunnel": "funcionando"})
+
+@app.route("/scraping/ejecutar", methods=["POST"])
+def ejecutar_scraping():
+    ahora = datetime.now().strftime("%H:%M:%S")
+    print(f"[OK] [{ahora}] Recibí pedido de scraping desde Render/Railway")
+    payload = {
+        "ok": True,
+        "mensajes": [
+            "Mensaje de prueba 1 (simulado)",
+            "Mensaje de prueba 2 (simulado)",
+        ],
+        "total": 2,
+    }
+    return jsonify(payload)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8765))
     app.run(host="0.0.0.0", port=port, debug=True)
